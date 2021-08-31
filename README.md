@@ -23,3 +23,8 @@ npm run build
 ```
 npm run lint
 ```
+
+### Middleman dashboard path
+```
+/middleman/dashboard
+```
