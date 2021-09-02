@@ -61,7 +61,7 @@ export default {
 
   setup() {
     function handleModalClose() {
-      location.reload()
+      location.replace('/')
     }
 
     return {

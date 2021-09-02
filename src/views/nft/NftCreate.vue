@@ -28,6 +28,8 @@
                     v-model="form.price"
                     label="Price*"
                     type="number"
+                    step="0.00000001"
+                    min=0
                     required
                 />
               </div>
@@ -117,17 +119,17 @@
 <script>
 import useCurrencyConverter from "@/composable/currencyConverter"
 import ButtonPrimary from "@/components/ui/button/ButtonPrimary"
+import NftCreatedModal from "@/components/NftCreatedModal"
 import FormTextarea from "@/components/form/FormTextarea"
 import createNftAction from "@/action/createNftAction"
 import FormSelect from "@/components/form/FormSelect"
 import AssetPreview from "@/components/AssetPreview"
 import FormInput from "@/components/form/FormInput"
+import FormRadio from "@/components/form/FormRadio"
 import {computed, reactive, ref, watch} from "vue"
 import buildFormData from "@/utils/helpers"
 import {useStore} from "vuex"
 import axios from "axios"
-import FormRadio from "../../components/form/FormRadio";
-import NftCreatedModal from "../../components/NftCreatedModal";
 
 let categories = [
   'Art',
