@@ -9,14 +9,14 @@
             </router-link>
         </div>
         <div class="block lg:hidden">
-            <button class="navbar-burger flex items-center py-2 px-3 text-indigo-500 rounded border border-indigo-500">
+            <button @click="showMobileMenu = ! showMobileMenu" class="navbar-burger flex items-center py-2 px-3 text-indigo-500 rounded border border-indigo-500">
                 <svg class="fill-current h-3 w-3" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <title>Menu</title>
                     <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
                 </svg>
             </button>
         </div>
-        <div class="navbar-menu hidden lg:flex lg:flex-grow lg:items-center w-full lg:w-auto">
+        <div :class="{'hidden': ! showMobileMenu}" class="navbar-menu  lg:flex lg:flex-grow lg:items-center w-full lg:w-auto">
             <div class="ml-auto lg:space-x-4">
                 <router-link
                     :to="{name: 'Home'}"
@@ -48,15 +48,16 @@
 </template>
 
 <script>
-import {computed, onMounted} from "vue"
+import {computed, onMounted, ref} from "vue"
 import {useStore} from "vuex"
 
 export default {
   name: "LayoutTopNav",
 
   setup() {
-    let user = computed(() => store.getters['user/user'])
     let authenticated = computed(() => store.getters['user/authenticated'])
+    let user = computed(() => store.getters['user/user'])
+    let showMobileMenu = ref(false)
     let store = useStore()
 
     onMounted(() => {
@@ -64,6 +65,7 @@ export default {
     })
 
     return {
+      showMobileMenu,
       authenticated,
       user
     }
