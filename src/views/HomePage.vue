@@ -66,8 +66,9 @@ export default {
 
     onMounted(() => {
       isLoading.value = true
+      let network = user.value ? `?network=${user.value.network}` : ''
 
-      axios.get(`/nft?network=${user.value.network}`)
+      axios.get(`/nft?${network}`)
           .then(
               res => {
                 isLoading.value = false
