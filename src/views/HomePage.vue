@@ -68,7 +68,7 @@ export default {
       isLoading.value = true
       let network = user.value.network ? `?network=${user.value.network}` : ''
 
-      axios.get(`/nft?${network}`)
+      axios.get(`/nft${network}`)
           .then(
               res => {
                 isLoading.value = false
