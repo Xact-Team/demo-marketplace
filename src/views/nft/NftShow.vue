@@ -52,6 +52,7 @@
               </button-primary>
 
               <button-primary
+                  v-if="nft.fil_address"
                   @click="filCheckout"
                   :is-busy="isLoading"
               >
@@ -101,12 +102,12 @@ export default {
     let user = computed(() => store.getters['user/user'])
     let showPurchaseCompleteMessage = ref('')
     let errorMessage = ref('')
+    let {getPrice} = useCurrency()
     let isNftLoading = ref(true)
     let isLoading = ref(false)
-    let {getPrice} = useCurrency()
-    let nft = ref({})
     let store = useStore()
     let route = useRoute()
+    let nft = ref({})
 
     onMounted(() => {
       isNftLoading.value = true
