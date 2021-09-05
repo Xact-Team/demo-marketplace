@@ -41,27 +41,40 @@
           </table>
 
           <div v-if="! showPurchaseCompleteMessage.length">
-            <div class="flex items-center mb-4">
-              <span class="text-yellow-600 uppercase">warning! &nbsp;</span>
-              Before purchase this NFT, associate it with your account &nbsp;
-              <strong>{{ nft.token_id }}</strong>
+            <div v-if="isAuthenticated">
+              <div v-if="nft.user_id !== user.account_id">
+                <div class="flex items-center mb-4">
+                  <span class="text-yellow-600 uppercase">warning! &nbsp;</span>
+                  Before purchase this NFT, associate it with your account &nbsp;
+                  <strong>{{ nft.token_id }}</strong>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                  <button-primary
+                      @click="hbarCheckout"
+                      :is-busy="isLoading"
+                  >
+                    Buy with HBAR!
+                  </button-primary>
+
+                  <button-primary
+                      v-if="nft.fil_address"
+                      @click="filCheckout"
+                      :is-busy="isLoading"
+                  >
+                    Buy with FIL!
+                  </button-primary>
+                </div>
+              </div>
+
+              <div v-else class="text-lg text-gray-800">
+                <span class="text-yellow-600 uppercase">warning!&nbsp;</span>
+                You can't buy your own NFT.
+              </div>
             </div>
-
-            <div class="flex items-center space-x-4">
-              <button-primary
-                  @click="hbarCheckout"
-                  :is-busy="isLoading"
-              >
-                Buy with HBAR!
-              </button-primary>
-
-              <button-primary
-                  v-if="nft.fil_address"
-                  @click="filCheckout"
-                  :is-busy="isLoading"
-              >
-                Buy with FIL!
-              </button-primary>
+            <div v-else class="text-lg text-gray-800">
+              <span class="text-yellow-600 uppercase">warning!&nbsp;</span>
+              You need to connect your wallet in order to buy this NFT.
             </div>
           </div>
 
@@ -104,6 +117,7 @@ export default {
   components: {NftPrice, ButtonPrimary, AssetPreview},
 
   setup() {
+    let isAuthenticated = computed(() => store.getters['user/authenticated'])
     let user = computed(() => store.getters['user/user'])
     let showPurchaseCompleteMessage = ref('')
     let errorMessage = ref('')
@@ -163,11 +177,13 @@ export default {
 
     return {
       showPurchaseCompleteMessage,
+      isAuthenticated,
       errorMessage,
       hbarCheckout,
       isNftLoading,
       filCheckout,
       isLoading,
+      user,
       nft
     }
   }
