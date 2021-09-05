@@ -44,7 +44,7 @@ const routes = [
       {
         path: 'dashboard',
         name: 'MiddlemanDashboard',
-        component: () => import(/* webpackChunkName: "middleman-dashboard" */ '@/views/middleman/Index')
+        component: () => import(/* webpackChunkName: "middleman-dashboard" */ '@/views/middleman/Index'),
       }
     ]
   }
@@ -60,7 +60,7 @@ router.beforeEach((to, from, next) => {
 
   document.title = `${to.meta.title} | Demo Marketplace`
 
-  if (! notAMiddlemanAccount(user) && to.meta.middleman) {
+  if (notAMiddlemanAccount(user) && to.meta.middleman) {
     next(from.path)
   } else {
     next()
