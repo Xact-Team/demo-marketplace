@@ -23,7 +23,7 @@ export default {
         getCurrency({commit, getters}) {
             if (Object.keys(getters.currency).length) return
 
-            axios.get(`${process.env.VUE_APP_BACKEND_URI}/coingecko/get-usd-value-for`, {
+            axios.get('/coingecko/get-usd-value-for', {
                 params: {
                     coin: 'filecoin,hedera-hashgraph'
                 }
