@@ -8,7 +8,9 @@
       <div v-else class="flex flex-wrap -mx-8">
         <div class="lg:w-1/2 px-8 mt-6 lg:mt-0 order-2 lg:order-none">
           <h2 class="text-4xl mb-2 font-semibold font-heading">{{ nft.name }}</h2>
-          <p class="mb-6">{{ getPrice(nft).hbar }} HBAR or {{ getPrice(nft).fil }} FIL</p>
+          <p class="mb-6">
+            <nft-price :nft="nft" />
+          </p>
           <div class="flex mb-6">
             <ul class="flex list-reset">
               <li class="block py-2 px-3 mr-2 bg-gray-100 rounded">
@@ -27,7 +29,9 @@
             </tr>
             <tr class="border-t">
               <td class="py-3">Price per copy</td>
-              <td class="text-right">{{ getPrice(nft).hbar }} HBAR or {{ getPrice(nft).fil }} FIL</td>
+              <td class="text-right">
+                <nft-price :nft="nft" />
+              </td>
             </tr>
             <tr class="border-t">
               <td class="py-3">Category</td>
@@ -87,6 +91,7 @@ import ButtonPrimary from "@/components/ui/button/ButtonPrimary"
 import {toCentralAccount} from "@/use/useHbarPayment"
 import AssetPreview from "@/components/AssetPreview"
 import useTrustWallet from "@/use/useTrustWallet"
+import NftPrice from "@/components/NftPrice"
 import {computed, onMounted, ref} from "vue"
 import useCurrency from "@/use/useCurrency"
 import {useRoute} from "vue-router"
@@ -96,7 +101,7 @@ import axios from "axios"
 export default {
   name: "Show",
 
-  components: {ButtonPrimary, AssetPreview},
+  components: {NftPrice, ButtonPrimary, AssetPreview},
 
   setup() {
     let user = computed(() => store.getters['user/user'])
@@ -149,7 +154,7 @@ export default {
     }
 
     function recordOrder(tx_id) {
-      axios.post('orders', {
+      axios.post('middleman/orders', {
         nft_id: nft.value.id,
         buyer_id: user.value.account_id,
         tx_id
@@ -163,7 +168,6 @@ export default {
       isNftLoading,
       filCheckout,
       isLoading,
-      getPrice,
       nft
     }
   }

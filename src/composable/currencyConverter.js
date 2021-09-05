@@ -1,11 +1,9 @@
-import {onMounted, reactive} from "vue"
-import axios from "axios"
+import {useStore} from "vuex"
+import {computed, onMounted} from "vue"
 
 export default function useCurrencyConverter() {
-    let currencyInUsd = reactive({
-        hbar: 0,
-        fil: 0
-    })
+    let store = useStore()
+    let currencyInUsd = computed(() => store.getters['currency/currency'])
 
     /**
      * If Hbar selected get Hbar equivalent of FIL.
@@ -16,14 +14,14 @@ export default function useCurrencyConverter() {
     function convertCurrency(price, currency) {
         // calculate selected currency in USD value.
         let usdValue = currency === 'FIL'
-            ? currencyInUsd.fil
-            : currencyInUsd.hbar
+            ? currencyInUsd.value.fil
+            : currencyInUsd.value.hbar
         let calcUsd = format(usdValue * parseFloat(price))
 
         // Calculate unselected currency.
         let otherUsdValue = currency === 'FIL'
-            ? currencyInUsd.hbar
-            : currencyInUsd.fil
+            ? currencyInUsd.value.hbar
+            : currencyInUsd.value.fil
 
         return {
             price: format(calcUsd / otherUsdValue),
@@ -32,16 +30,7 @@ export default function useCurrencyConverter() {
     }
 
     onMounted(() => {
-        axios.get(`${process.env.VUE_APP_BACKEND_URI}/coingecko/get-usd-value-for`, {
-            params: {
-                coin: 'filecoin,hedera-hashgraph'
-            }
-        }).then(
-            ({data}) => {
-                currencyInUsd.fil = data.filecoin.usd
-                currencyInUsd.hbar = data['hedera-hashgraph'].usd
-            }
-        )
+        store.dispatch('currency/getCurrency')
     })
 
     return {

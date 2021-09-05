@@ -35,9 +35,7 @@
               {{ nft.description }}
             </p>
             Buy for
-            <span class="text-l font-bold">{{ getPrice(nft).hbar }} HBAR</span>
-            or
-            <span class="text-l font-bold">{{ getPrice(nft).fil }} FIL</span>
+            <nft-price :nft="nft" />
           </div>
         </div>
       </div>
@@ -48,6 +46,7 @@
 <script>
 import AssetPreview from "@/components/AssetPreview"
 import {computed, onMounted, ref} from "vue"
+import NftPrice from "@/components/NftPrice"
 import useCurrency from "@/use/useCurrency"
 import {useStore} from "vuex"
 import axios from "axios"
@@ -55,7 +54,7 @@ import axios from "axios"
 export default {
   name: "HomePage",
 
-  components: {AssetPreview},
+  components: {NftPrice, AssetPreview},
 
   setup() {
     let user = computed(() => store.getters['user/user'])
