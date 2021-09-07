@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@google/model-viewer": "^1.8.0",
     "@hashgraph/sdk": "^2.0.19",
     "@walletconnect/client": "^1.6.5",
     "@walletconnect/qrcode-modal": "^1.6.5",

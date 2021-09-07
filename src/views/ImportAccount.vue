@@ -69,7 +69,7 @@
 
         <div class="rounded bg-green-600 hover:bg-green-500 text-white pt-2 flex max-w-lg mb-4 mx-auto text-center border-b-2 border-green-600">
             <div class=" w-3/3 pb-2 " style=" margin-left: auto;margin-right: auto;">
-                <a href="#" class="hover:text-gray-50">Start browsing NFT marketplace</a>
+                <router-link :to="{name: 'Home'}" class="hover:text-gray-50">Start browsing NFT marketplace</router-link>
             </div>
         </div>
 

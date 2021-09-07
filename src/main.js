@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
+import '@google/model-viewer'
 import router from './router'
 import App from './App.vue'
-import axios from "axios"
 import store from './store'
+import axios from "axios"
 import './index.css'
 
 axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URI

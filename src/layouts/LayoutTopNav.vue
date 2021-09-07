@@ -39,9 +39,9 @@
                     Create a NFT
                 </router-link>
 
-                <span v-if="authenticated" class="inline-block py-3 px-6 mt-4 lg:mt-0 leading-none text-indigo-500 border-b-2 border-indigo-600 font-semibold rounded shadow">
+                <router-link :to="{name: 'ImportAccount'}" v-if="authenticated" class="inline-block py-3 px-6 mt-4 lg:mt-0 leading-none text-indigo-500 border-b-2 border-indigo-600 font-semibold rounded shadow">
                     Connected with Hedera Hashgraph account {{ user.account_id }}
-                </span>
+                </router-link>
             </div>
         </div>
     </nav>
